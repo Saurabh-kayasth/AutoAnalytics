@@ -9,7 +9,7 @@ from scipy import stats
 import numpy as np
 
 
-class EDADataframeAnalysis:
+class EDA_Dataframe_Analysis():
 
     def __init__(self):
         print("General_EDA object created")
