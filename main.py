@@ -239,7 +239,8 @@ def main():
         elif type == 'Regression' and chosen_classifier == 'Linear Regression':
             x = model.Linear_Regression(x_train, y_train, x_test, y_test)
             st.header('Linear Regression')
-            st.write(x)
+            # st.write(x)
+
 
 
 st.markdown('<style>h1{color: red;}</style>', unsafe_allow_html=True)
