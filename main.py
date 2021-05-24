@@ -28,7 +28,7 @@ def main():
                 st.write(dataframe.show_dtypes(df))
 
             if st.checkbox("Show Columns"):
-                st.write(show_columns(df))
+                st.write(dataframe.show_columns(df))
 
             if st.checkbox("Show Missing"):
                 st.write(dataframe.Show_Missing1(df))
@@ -45,7 +45,7 @@ def main():
             if st.checkbox("Statistical Summary"):
                 st.write(info.statistical_summary(df))
             if st.checkbox("Show Selected Columns"):
-                selected_columns = st.multiselect("Select Columns", show_columns(df))
+                selected_columns = st.multiselect("Select Columns", dataframe.show_columns(df))
                 new_df = df[selected_columns]
                 st.dataframe(new_df)
 
@@ -58,22 +58,22 @@ def main():
                 new_df = dataframe.categorical_variables(df)
                 catego_df = pd.DataFrame(new_df)
                 st.dataframe(catego_df)
-                all_columns_names = show_columns(df)
-                all_columns_names1 = show_columns(df)
+                all_columns_names = dataframe.show_columns(df)
+                all_columns_names1 = dataframe.show_columns(df)
                 selected_columns_names = st.selectbox("Select Column 1 For Cross Tabultion", all_columns_names)
                 selected_columns_names1 = st.selectbox("Select Column 2 For Cross Tabultion", all_columns_names1)
                 if st.button("Generate Cross Tab"):
                     st.dataframe(pd.crosstab(df[selected_columns_names], df[selected_columns_names1]))
 
-                all_columns_names3 = show_columns(df)
-                all_columns_names4 = show_columns(df)
+                all_columns_names3 = dataframe.show_columns(df)
+                all_columns_names4 = dataframe.show_columns(df)
                 selected_columns_name3 = st.selectbox("Select Column 1 For Pearsonr Correlation (Numerical Columns)",
                                                       all_columns_names3)
                 selected_columns_names4 = st.selectbox("Select Column 2 For Pearsonr Correlation (Numerical Columns)",
                                                        all_columns_names4)
 
                 #spearmanr3 = dataframe.show_columns(df)
-                spearmanr4 = show_columns(df)
+                spearmanr4 = dataframe.show_columns(df)
                 spearmanr13 = st.selectbox("Select Column 1 For spearmanr Correlation (Categorical Columns)",
                                            spearmanr4)
                 spearmanr14 = st.selectbox("Select Column 2 For spearmanr Correlation (Categorical Columns)",
@@ -85,19 +85,19 @@ def main():
 
                 st.subheader("UNIVARIATE ANALYSIS")
 
-                all_columns_names = show_columns(df)
+                all_columns_names = dataframe.show_columns(df)
                 selected_columns_names = st.selectbox("Select Column for Histogram ", all_columns_names)
                 if st.checkbox("Show Histogram for Selected variable"):
                     st.write(dataframe.show_hist(df[selected_columns_names]))
                     st.pyplot()
 
-                all_columns_names = show_columns(df)
+                all_columns_names = dataframe.show_columns(df)
                 selected_columns_names = st.selectbox("Select Columns Distplot ", all_columns_names)
                 if st.checkbox("Show DisPlot for Selected variable"):
                     st.write(dataframe.Show_DisPlot(df[selected_columns_names]))
                     st.pyplot()
 
-                all_columns_names = show_columns(df)
+                all_columns_names = dataframe.show_columns(df)
                 selected_columns_names = st.selectbox("Select Columns CountPlot ", all_columns_names)
                 if st.checkbox("Show CountPlot for Selected variable"):
                     st.write(dataframe.Show_CountPlot(df[selected_columns_names]))
@@ -204,7 +204,7 @@ def main():
             st.write("Build your BaseLine Model")
 
     type = st.sidebar.selectbox("Algorithm type", ("Classification", "Regression", "Clustering"))
-    global chosen_classifier, x_train, y_train, x_test, y_test
+
     if type == "Regression":
         chosen_classifier = st.sidebar.selectbox("Please choose a classifier",
                                                  ('Random Forest', 'Linear Regression', 'Neural Network'))

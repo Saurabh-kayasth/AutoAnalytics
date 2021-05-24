@@ -9,10 +9,6 @@ from scipy import stats
 import numpy as np
 
 
-def show_columns(x):
-    return x.columns
-
-
 class EDADataframeAnalysis:
 
     def __init__(self):
@@ -20,6 +16,9 @@ class EDADataframeAnalysis:
 
     def show_dtypes(self, x):
         return x.dtypes
+
+    def show_columns(self, x):
+        return x.columns
 
     def Show_Missing(self, x):
         return x.isna().sum()
