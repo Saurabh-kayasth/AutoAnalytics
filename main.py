@@ -154,6 +154,7 @@ def main():
             st.success("Data Frame Loaded successfully")
             df1 = df
             cols = list(df1.columns.values)
+            st.header('Null/NA Values')
             st.write(df.isnull().sum())
             fill = st.selectbox('Imputer Or Drop Column:', options=['Select', 'Impute Knn', 'DropNA'])
 
