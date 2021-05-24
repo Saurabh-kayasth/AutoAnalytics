@@ -213,7 +213,7 @@ def main():
 
     if type == "Regression":
         chosen_classifier = st.sidebar.selectbox("Please choose a classifier",
-                                                 ('Random Forest', 'Linear Regression', 'Neural Network'))
+                                                 ('Lasso Regression', 'Linear Regression'))
     elif type == "Classification":
         chosen_classifier = st.sidebar.selectbox("Please choose a classifier",
                                                  (
