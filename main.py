@@ -4,11 +4,15 @@ from AttributeInformation import *
 from EDADataFrameAnalysis import *
 from DataframeLoader import *
 from DataBaseModelling import *
+import streamlit as st
+import pickle
+import base64
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
 # image = Image.open('cover.jpg')
 matplotlib.use("Agg")
+global modal
 
 
 def main():
@@ -167,10 +171,12 @@ def main():
             if st.checkbox("Categorical Variables"):
                 new_df = dataframe.categorical_variables(df)
                 catego_df = pd.DataFrame(new_df)
+
                 categories = list(catego_df.columns.values)
-                st.dataframe(catego_df)
+                columns_select = st.multiselect("Select Columns for Catgorical Analysis ", options=categories, default=categories)
+                st.dataframe(columns_select)
                 if st.checkbox('Encode Categorical Features'):
-                    dummies = pd.get_dummies(df[categories])
+                    dummies = pd.get_dummies(df[columns_select])
                     st.dataframe(dummies)
                     df = df.drop(categories, axis=1)
                     df = df.join(dummies)
@@ -203,7 +209,7 @@ def main():
             st.subheader("MODEL BUILDING")
             st.write("Build your BaseLine Model")
 
-    type = st.sidebar.selectbox("Algorithm type", ("Classification", "Regression", "Clustering"))
+    type = st.sidebar.selectbox("Algorithm type", ("Classification", "Regression"))
 
     if type == "Regression":
         chosen_classifier = st.sidebar.selectbox("Please choose a classifier",
@@ -213,7 +219,6 @@ def main():
                                                  (
                                                  'Logistic Regression', 'Naive Bayes', 'Random Forest', 'Decision Tree',
                                                  'K nearest Neighbour'))
-
     if st.sidebar.button('Confirm Model'):
         st.write(type, chosen_classifier)
         if type == 'Classification' and chosen_classifier == 'Logistic Regression':
@@ -237,9 +242,17 @@ def main():
             st.header('Decision Tree')
             st.write(x)
         elif type == 'Regression' and chosen_classifier == 'Linear Regression':
-            x = model.Linear_Regression(x_train, y_train, x_test, y_test)
             st.header('Linear Regression')
+
+            x = model.Linear_Regression(x_train, y_train, x_test, y_test)
             # st.write(x)
+        elif type == 'Regression' and chosen_classifier == 'Lasso Regression':
+            st.header('Lasso Regression')
+
+            x = model.Lasso_Regression(x_train, y_train, x_test, y_test)
+
+            # st.write(x)
+
 
 
 st.markdown('<style>h1{color: red;}</style>', unsafe_allow_html=True)

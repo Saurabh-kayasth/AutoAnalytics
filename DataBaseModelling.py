@@ -30,11 +30,11 @@ from scipy.stats import anderson
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report
+
 from sklearn.linear_model import LinearRegression
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
-from sklearn.preprocessing import OneHotEncoder, LabelEncoder
 from sklearn.linear_model import LogisticRegression
+from sklearn import linear_model
+
 from sklearn.naive_bayes import GaussianNB
 
 
@@ -73,6 +73,17 @@ class Data_Base_Modelling():
         error_metrics['MSE_train'] = mean_squared_error(y_train, predictions_train)
         return st.markdown('### MSE Train: ' + str(round(error_metrics['MSE_train'], 3)) +
                            ' -- MSE Test: ' + str(round(error_metrics['MSE_test'], 3)))
+
+    def Lasso_Regression(self, x_train, y_train, x_test, y_test):
+        reg = linear_model.Lasso(alpha=0.1).fit(x_train, y_train)
+        predictions = reg.predict(x_test)
+        predictions_train = reg.predict(x_train)
+        error_metrics = {}
+        error_metrics['MSE_test'] = mean_squared_error(y_test, predictions)
+        error_metrics['MSE_train'] = mean_squared_error(y_train, predictions_train)
+        return st.markdown('### MSE Train: ' + str(round(error_metrics['MSE_train'], 3)) +
+                           ' -- MSE Test: ' + str(round(error_metrics['MSE_test'], 3)))
+
 
 
 
