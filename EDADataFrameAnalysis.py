@@ -2,10 +2,14 @@ import pandas as pd
 import plotly.express as px
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import LabelEncoder
+from sklearn import preprocessing
+
 from sklearn.decomposition import PCA
 from scipy.stats import chi2_contingency, chi2
 import seaborn as sns
 from scipy import stats
+from sklearn.preprocessing import LabelEncoder
+
 import numpy as np
 
 
@@ -173,3 +177,13 @@ class EDA_Dataframe_Analysis():
             print(">> Rejecting Null Hypothesis <<")
             print("There Is A Significance Relationship Between Two Variables")
         return p, alpha
+
+    def Label_Encoding(self, x):
+        category_col = [var for var in x.columns if x[var].dtypes == "object"]
+        labelEncoder = preprocessing.LabelEncoder()
+        mapping_dict = {}
+        for col in category_col:
+            x[col] = labelEncoder.fit_transform(x[col])
+            le_name_mapping = dict(zip(labelEncoder.classes_, labelEncoder.transform(labelEncoder.classes_)))
+            mapping_dict[col] = le_name_mapping
+        return mapping_dict

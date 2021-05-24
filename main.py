@@ -69,23 +69,23 @@ def main():
                 if st.button("Generate Cross Tab"):
                     st.dataframe(pd.crosstab(df[selected_columns_names], df[selected_columns_names1]))
 
-                all_columns_names3 = dataframe.show_columns(df)
-                all_columns_names4 = dataframe.show_columns(df)
-                selected_columns_name3 = st.selectbox("Select Column 1 For Pearsonr Correlation (Numerical Columns)",
-                                                      all_columns_names3)
-                selected_columns_names4 = st.selectbox("Select Column 2 For Pearsonr Correlation (Numerical Columns)",
-                                                       all_columns_names4)
+                # all_columns_names3 = dataframe.show_columns(df)
+                # all_columns_names4 = dataframe.show_columns(df)
+                # selected_columns_name3 = st.selectbox("Select Column 1 For Pearsonr Correlation (Numerical Columns)",
+                #                                       all_columns_names3)
+                # selected_columns_names4 = st.selectbox("Select Column 2 For Pearsonr Correlation (Numerical Columns)",
+                #                                        all_columns_names4)
 
                 #spearmanr3 = dataframe.show_columns(df)
-                spearmanr4 = dataframe.show_columns(df)
-                spearmanr13 = st.selectbox("Select Column 1 For spearmanr Correlation (Categorical Columns)",
-                                           spearmanr4)
-                spearmanr14 = st.selectbox("Select Column 2 For spearmanr Correlation (Categorical Columns)",
-                                           spearmanr4)
-                if st.button("Generate spearmanr Correlation"):
-                    df = pd.DataFrame(dataframe.Show_spearmanr(catego_df[spearmanr13], catego_df[spearmanr14]),
-                                      index=['Pvalue', '0'])
-                    st.dataframe(df)
+                # spearmanr4 = dataframe.show_columns(df)
+                # spearmanr13 = st.selectbox("Select Column 1 For spearmanr Correlation (Categorical Columns)",
+                #                            spearmanr4)
+                # spearmanr14 = st.selectbox("Select Column 2 For spearmanr Correlation (Categorical Columns)",
+                #                            spearmanr4)
+                # if st.button("Generate spearmanr Correlation"):
+                #     df = pd.DataFrame(dataframe.Show_spearmanr(catego_df[spearmanr13], catego_df[spearmanr14]),
+                #                       index=['Pvalue', '0'])
+                #     st.dataframe(df)
 
                 st.subheader("UNIVARIATE ANALYSIS")
 
