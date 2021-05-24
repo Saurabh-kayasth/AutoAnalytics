@@ -40,6 +40,9 @@ st.title('Machine Learning Predictor')
 # Main Predicor class
 class Predictor:
     # Data preparation part, it will automatically handle with your data
+    def __init__(self):
+        pass
+
     def prepare_data(self, split_data, train_test):
         # Reduce data size
         data = self.data[self.features]
@@ -77,14 +80,11 @@ class Predictor:
         # Train test split
         try:
             self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X, y,
-                                                                                    test_size=(1 - train_test / 100),
-                                                                                    random_state=42)
+                                                                                    test_size=(1 - train_test / 100),                                                                     random_state=42)
         except:
             st.markdown(
                 '<span style="color:red">With this amount of data and split size the train data will have no records, <br /> Please change reduce and split parameter <br /> </span>',
                 unsafe_allow_html=True)
-
-            # Classifier type and algorithm selection
 
     def set_classifier_properties(self):
         self.type = st.sidebar.selectbox("Algorithm type", ("Classification", "Regression", "Clustering"))
@@ -105,11 +105,8 @@ class Predictor:
                 self.epochs = st.sidebar.slider('number of epochs', 1, 100, 10)
                 self.learning_rate = float(st.sidebar.text_input('learning rate:', '0.001'))
                 self.number_of_classes = int(st.sidebar.text_input('Number of classes', '2'))
-
-
         elif self.type == "Clustering":
             pass
-
     # Model training and predicitons 
     def predict(self, predict_btn):
 
@@ -120,28 +117,12 @@ class Predictor:
                 predictions = self.alg.predict(self.X_test)
                 self.predictions_train = self.alg.predict(self.X_train)
                 self.predictions = predictions
-
-
             elif self.chosen_classifier == 'Linear Regression':
                 self.alg = LinearRegression()
                 self.model = self.alg.fit(self.X_train, self.y_train)
                 predictions = self.alg.predict(self.X_test)
                 self.predictions_train = self.alg.predict(self.X_train)
                 self.predictions = predictions
-
-            # elif self.chosen_classifier == 'Neural Network':
-            #     model = Sequential()
-            #     model.add(Dense(500, input_dim=len(self.X_train.columns), activation='relu', ))
-            #     model.add(Dense(50, activation='relu'))
-            #     model.add(Dense(50, activation='relu'))
-            #     model.add(Dense(1))
-
-                # optimizer = keras.optimizers.SGD(lr=self.learning_rate, decay=1e-6, momentum=0.9, nesterov=True)
-                # model.compile(loss="mean_squared_error", optimizer='adam', metrics=["mean_squared_error"])
-                # self.model = model.fit(self.X_train, self.y_train, epochs=self.epochs, batch_size=40)
-                # self.predictions = model.predict(self.X_test)
-                # self.predictions_train = model.predict(self.X_train)
-
         elif self.type == "Classification":
             if self.chosen_classifier == 'Logistic Regression':
                 self.alg = LogisticRegression()
@@ -149,28 +130,12 @@ class Predictor:
                 predictions = self.alg.predict(self.X_test)
                 self.predictions_train = self.alg.predict(self.X_train)
                 self.predictions = predictions
-
             elif self.chosen_classifier == 'Naive Bayes':
                 self.alg = GaussianNB()
                 self.model = self.alg.fit(self.X_train, self.y_train)
                 predictions = self.alg.predict(self.X_test)
                 self.predictions_train = self.alg.predict(self.X_train)
                 self.predictions = predictions
-
-            # elif self.chosen_classifier == 'Neural Network':
-            #     model = Sequential()
-            #     model.add(Dense(500, input_dim=len(self.X_train.columns), activation='relu'))
-            #     model.add(Dense(50, activation='relu'))
-            #     model.add(Dense(50, activation='relu'))
-            #     model.add(Dense(self.number_of_classes, activation='softmax'))
-            #
-            #     optimizer = tf.keras.optimizers.SGD(lr=self.learning_rate, decay=1e-6, momentum=0.9, nesterov=True)
-            #     model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
-            #     self.model = model.fit(self.X_train, self.y_train, epochs=self.epochs, batch_size=40)
-            #
-            #     self.predictions = model.predict_classes(self.X_test)
-            #     self.predictions_train = model.predict_classes(self.X_train)
-
         result = pd.DataFrame(columns=['Actual', 'Actual_Train', 'Prediction', 'Prediction_Train'])
         result_train = pd.DataFrame(columns=['Actual_Train', 'Prediction_Train'])
         result['Actual'] = self.y_test
@@ -180,7 +145,6 @@ class Predictor:
         result.sort_index()
         self.result = result
         self.result_train = result_train
-
         return self.predictions, self.predictions_train, self.result, self.result_train
 
     # Get the result metrics of the model
@@ -198,18 +162,14 @@ class Predictor:
             return st.markdown('### Accuracy Train: ' + str(round(self.error_metrics['Accuracy_train'], 3)) +
                                ' -- Accuracy Test: ' + str(round(self.error_metrics['Accuracy_test'], 3)))
 
-    # Plot the predicted values and real values
     def plot_result(self):
-
         output_file("slider.html")
-
         s1 = figure(plot_width=800, plot_height=500, background_fill_color="#fafafa")
         s1.circle(self.result_train.index, self.result_train.Actual_Train, size=12, color="Black", alpha=1,
                   legend_label="Actual")
         s1.triangle(self.result_train.index, self.result_train.Prediction_Train, size=12, color="Red", alpha=1,
                     legend_label="Prediction")
         tab1 = Panel(child=s1, title="Train Data")
-
         if self.result.Actual is not None:
             s2 = figure(plot_width=800, plot_height=500, background_fill_color="#fafafa")
             s2.circle(self.result.index, self.result.Actual, size=12, color=Set3[5][3], alpha=1, legend_label="Actual")
@@ -218,9 +178,7 @@ class Predictor:
             tab2 = Panel(child=s2, title="Test Data")
             tabs = Tabs(tabs=[tab1, tab2])
         else:
-
             tabs = Tabs(tabs=[tab1])
-
         st.bokeh_chart(tabs)
 
     # File selector module for web app
@@ -244,9 +202,11 @@ class Predictor:
 
 if __name__ == '__main__':
     controller = Predictor()
+    global split_data
+    global train_test
+    global predict_btn
     try:
         controller.data = controller.file_selector()
-
         if controller.data is not None:
             split_data = st.sidebar.slider('Randomly reduce data size %', 1, 100, 10)
             train_test = st.sidebar.slider('Train-test split %', 1, 99, 66)
@@ -265,11 +225,9 @@ if __name__ == '__main__':
             predictions, predictions_train, result, result_train = controller.predict(predict_btn)
             for percent_complete in range(100):
                 my_bar.progress(percent_complete + 1)
-
             controller.get_metrics()
             controller.plot_result()
             controller.print_table()
-
             data = controller.result.to_csv(index=False)
             b64 = base64.b64encode(data.encode()).decode()  # some strings <-> bytes conversions necessary here
             href = f'<a href="data:file/csv;base64,{b64}">Download Results</a> (right-click and save as &lt;some_name&gt;.csv)'

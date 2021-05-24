@@ -8,15 +8,18 @@ import seaborn as sns
 from scipy import stats
 import numpy as np
 
-class EDA_Dataframe_Analysis():
+
+def show_columns(x):
+    return x.columns
+
+
+class EDADataframeAnalysis:
+
     def __init__(self):
         print("General_EDA object created")
 
     def show_dtypes(self, x):
         return x.dtypes
-
-    def show_columns(self, x):
-        return x.columns
 
     def Show_Missing(self, x):
         return x.isna().sum()
@@ -123,9 +126,6 @@ class EDA_Dataframe_Analysis():
         f, ax = plt.subplots(figsize=(15, 15))
         return sns.heatmap(x.corr(), annot=True, ax=ax);
 
-
-
-
     def label(self, x):
         le = LabelEncoder()
         x = le.fit_transform(x)
@@ -144,8 +144,6 @@ class EDA_Dataframe_Analysis():
 
     def qqplot(self, x):
         return sm.qqplot(x, line='45')
-
-
 
     def PCA(self, x):
         pca = PCA(n_components=8)
