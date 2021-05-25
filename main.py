@@ -121,7 +121,7 @@ def main():
     elif choice == 'About Us':
         html_temp2 = """
         <div style="padding:10px;color:#fff;">
-            <h3>Overview</h3>
+            <h3>About Us</h3>
             <p>Our product is we want to automate how people do Data Analysis. We want everyone to access the power 
                of Data Science and Data Analytics .Even non technical people can also use the tool with ease.
                The UI is also very easy to understand and also is very fast as compared to the current system.
